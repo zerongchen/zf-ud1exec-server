@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="LOG_HOME"  value="${ZF_HOME}/logs"></property>
+
+    <property name="consoleLayoutPattern"
+              value="%d{yyyyMMdd_HH:mm:ss.SSS} [%level] [%thread] [%logger{10}] \\(%F:%L\\) %msg%n" />
+
+    <property name="fileLayoutPattern"
+              value="%d{yyyyMMdd_HH:mm:ss.SSS} [%level] [%thread] [%logger{10}] \\(%F:%L\\) %msg%n" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${consoleLayoutPattern}</pattern>
+        </layout>
+    </appender>
+
+    <appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/zf-ud1exec-server/zf-ud1exec-server_debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/zf-ud1exec-server/zf-ud1exec-server_debug.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>${fileLayoutPattern}</Pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>debug</level>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/zf-ud1exec-server/zf-ud1exec-server_info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/zf-ud1exec-server/zf-ud1exec-server_info.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>${fileLayoutPattern}</Pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>info</level>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/zf-ud1exec-server/zf-ud1exec-server_error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/zf-ud1exec-server/zf-ud1exec-server_error.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>${fileLayoutPattern}</Pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <!-- 定义将com.aotain.ud1exec包下的最低级别日志信息   -->
+    <logger name="com.aotain.ud1exec" level="INFO"/>
+    <logger name="org.apache.zookeeper" level="ERROR"/>
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="kafka" level="ERROR"/>
+    <logger name="org.I0Itec" level="ERROR"/>
+    <logger name="org.apache.hadoop" level="ERROR"/>
+    <logger name="com.aotain.common.utils" level="ERROR"/>
+
+    <root>
+        <level value="INFO" /> <!-- 系统全局日志输出最低级别，但不包括com.aotain.zongfen包 -->
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="DEBUG_FILE" />
+        <appender-ref ref="INFO_FILE" />
+        <appender-ref ref="ERROR_FILE" />
+    </root>
+
+</configuration>
